@@ -157,7 +157,7 @@ public class TVServerBO {
 			throws Exception {
 		Map<String, Object> returnmap = new HashMap<String, Object>();
 		Map<String, Object> data = new HashMap<String, Object>();
-		List<Map<String, Object>> re = DB.seleteByColumn(MediaBO.TABLE_MEDIA, data, "*", "and GET_FIRST_PINYIN(media_name) like '%"+map.get("key_word")+"%' order by play_times desc LIMIT 50");
+		List<Map<String, Object>> re = DB.seleteByColumn(MediaBO.TABLE_MEDIA, data, "media_name,media_id", "and GET_FIRST_PINYIN(media_name) like '%"+map.get("key_word")+"%' order by play_times desc LIMIT 50");
 		TVServerImageBO.changeImageToURL(re, MediaBO.TABLE_MEDIA);
 		returnmap.put("mediaList", re);
 		return returnmap;
