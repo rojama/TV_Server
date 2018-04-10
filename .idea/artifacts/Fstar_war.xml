@@ -1,7 +1,7 @@
 <component name="ArtifactManager">
   <artifact type="war" name="Fstar:war">
     <output-path>$PROJECT_DIR$/out/artifacts/Fstar_war</output-path>
-    <root id="archive" name="Fstar_war.war">
+    <root id="archive" name="FStarWeb.war">
       <element id="artifact" artifact-name="Fstar:war exploded" />
     </root>
   </artifact>
