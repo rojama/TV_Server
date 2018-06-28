@@ -63,7 +63,7 @@ public class ServerBO {
 		}
 		
 		if (action.equals("add")){
-			map.remove("tid");
+			map.remove("device_info");
 			DB.insert(TABLE_TERMINAL, map);
 		}else if (action.equals("delete")){
 			DB.delete(TABLE_TERMINAL, map);

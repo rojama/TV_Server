@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -28,7 +30,8 @@ import com.fstar.sys.CommonMethodFilter;
 @WebServlet("/cm")
 public class CommonMethodServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+	private static Gson gson = new GsonBuilder().registerTypeAdapter(byte[].class, new ImageTypeAdapter()).create();
+
 	@EJB 
 	private CommonMethodFilter commonMethodFilter;
        
@@ -56,8 +59,8 @@ public class CommonMethodServlet extends HttpServlet {
 				sos.close();
 			}else{
 				res.setContentType("application/json;charset=utf-8");
-				PrintWriter out = res.getWriter();			
-				out.print(JsonUtil.object2json(result));
+				PrintWriter out = res.getWriter();
+				out.print(gson.toJson(result));
 				out.flush();
 				out.close();
 			}			

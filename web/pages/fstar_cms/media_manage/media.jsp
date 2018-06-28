@@ -126,6 +126,7 @@
 	                { display: '媒体编号', name: 'media_id', align: 'left', width: 80 },
 	                { display: '集数', name: 'series_no', width: 50,editor: { type: 'int' } },
 	                { display: '名称', name: 'series_name', width: 70,editor: { type: 'text' } },
+                    { display: 'VIP', name: 'vip', width: 50,editor: { type: 'checkbox' } },
 	                { display: '服务器编号', name: 'server_id', width: 70,editor: { type: 'text' } },
 	                { display: '视频地址', name: 'full', width: 500,editor: { type: 'text' } }
 	           
@@ -149,7 +150,7 @@
         	var urlaction = item.icon;
         	if (urlaction == "add"){
         		var row = $urlgrid.getSelectedRow();
-        		$urlgrid.addRow({media_id:urlselect.media_id });
+        		$urlgrid.addRow({media_id:urlselect.media_id, vip:false});
         	}else if (urlaction == "delete"){
         		$urlgrid.deleteSelectedRow();
         	}else if (urlaction == "save"){

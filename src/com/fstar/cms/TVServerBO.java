@@ -3,11 +3,7 @@ package com.fstar.cms;
 import java.sql.Blob;
 import java.sql.Types;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.fstar.cms.modle.MediaType;
 import com.fstar.cms.modle.VideoTypeInfo;
@@ -131,24 +127,36 @@ public class TVServerBO {
 		Map<String, Object> returnmap = new HashMap<String, Object>();
 		Map<String, Object> data = new HashMap<String, Object>();
 		String deviceId = (String) map.get("DeviceId");
-		data.put("device_id", deviceId);
-		data.put("time", Machine.getDateTime());
-		DB.insert("fs_access_history", data);
-		
-		returnmap.put("ok", true);
+		String history = (String) map.get("history");
+		if("Y".equals(history)){
+			data.put("device_id", deviceId);
+			data.put("time", Machine.getDateTime());
+			DB.insert("fs_access_history", data);
+		}
 
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		String[] ids = deviceId.split("-");
-		String sqlOther = "and (mac='"+checkID(ids[0])+"' or imei='"+checkID(ids[1])+"' or serial='"+checkID(ids[2])+"')";		
-		List<Map<String, Object>> result = DB.seleteByColumn(ServerBO.TABLE_TERMINAL, data, "validity", sqlOther);
-		for (Map<String, Object> d :result){
-			String validity = (String) d.get("validity");
-			if (!validity.isEmpty()){
-				if (format.parse(validity).before(new Date())){
-					returnmap.put("ok", false);
-				}
+		String sqlOther = "and mac='"+ids[0]+"' and imei='"+ids[1]+"' and serial='"+ids[2]+"'";
+		List<Map<String, Object>> result = DB.seleteByColumn(ServerBO.TABLE_TERMINAL, data, "device_info,validity", sqlOther);
+		if (result.isEmpty()){
+			data.clear();
+			data.put("device_info", UUID.randomUUID().toString().replace("-",""));
+			data.put("mac", ids[0]);
+			data.put("imei", ids[1]);
+			data.put("serial", ids[2]);
+			data.put("validity", "");
+			data.put("remark", "普通用户");
+			data.put("adddate", Machine.getDateTime());
+			DB.insert("fs_terminal", data);
+			returnmap.putAll(data);
+		}else{
+			for (Map<String, Object> d :result){
+				String validity = (String) d.get("validity");
+				returnmap.putAll(d);
+				break;
 			}
 		}
+        returnmap.put("ok", true);
 		return returnmap;
 	}
 	

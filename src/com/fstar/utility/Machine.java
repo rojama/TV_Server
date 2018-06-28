@@ -1,9 +1,7 @@
 package com.fstar.utility;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 获取系统日期与时间
@@ -18,7 +16,8 @@ public class Machine {
 	public static final String SYSTEM_TIME = "SystemTime";
 	//当前具体时间  yyyy-mm-dd hh:mm:ss
 	public static final String SYSTEM_DATETIME = "SystemDateTime";
-	
+
+	public static SimpleDateFormat formatdateD=new SimpleDateFormat("yyyy-MM-dd");
 	public static SimpleDateFormat formatdate=new SimpleDateFormat("yyyyMMdd");
 	public static SimpleDateFormat formattime=new SimpleDateFormat("HHmmss");
 	public static SimpleDateFormat formatdatetime=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -97,6 +96,17 @@ public class Machine {
 
 		return htl_SystemDateTime;
 	}
+
+	public static String getDateAddByMonth(int month){
+		Date date=new   Date();//取时间
+		System.out.println(date.toString());
+		Calendar   calendar   =   new GregorianCalendar();
+		calendar.setTime(date);
+		calendar.add(calendar.DAY_OF_MONTH, month);//把日期往后增加一个月.整数往后推,负数往前移动
+		date=calendar.getTime();   //这个时间就是日期往后推一天的结果
+		return formatdateD.format(date);
+	}
+
 	public static void main(String[] args){
 		System.out.println(getDate());
 		System.out.println(getTime());

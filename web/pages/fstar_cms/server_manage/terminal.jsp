@@ -27,12 +27,13 @@
 			$grid = $("#maingrid").ligerGrid({
                 height:'99%',width:'100%',
                 columns: [
-	                { display: '终端编号', name: 'tid', align: 'left', width: 80 },
-	                { display: '终端MAC', name: 'mac', width: 150 },
-	                { display: '终端IMEI', name: 'imei', width: 150 },
-	                { display: '终端SN', name: 'serial' , width: 150},
-	                { display: '终端有效期', name: 'validity' , width: 100},
-	                { display: '备注', name: 'remark' , width: 300}
+	                { display: '终端编号', name: 'device_info', align: 'left', width: 250 },
+	                { display: '终端MAC', name: 'mac', width: 130 },
+	                { display: '终端IMEI', name: 'imei', width: 130 },
+	                { display: '终端SN', name: 'serial' , width: 130},
+	                { display: 'VIP到期日', name: 'validity' , width: 100},
+                    { display: '启用日期', name: 'adddate' , width: 150},
+	                { display: '备注', name: 'remark' , width: 200}
                 ], pageSize:20 ,rownumbers:true,
                 toolbar: { items: [
 	                { text: '新增', click: toolbarAction, icon: 'add' },
@@ -47,11 +48,12 @@
 			$form = $("#mainform").ligerForm({
 	        	inputWidth: 200, labelWidth: 100, space:50, validate:true, align: 'center',width: '98%',
 	        	fields:[	//表单栏位
-	        		{ display: "终端编号",name:"tid",type:"text",validate:{required:true}},
+	        		{ display: "终端编号",name:"device_info",type:"text",validate:{required:true}},
 	        		{ display: "终端MAC",name:"mac",type:"text",validate:{required:false}},
 	        		{ display: "终端IMEI",name:"imei",type:"text",validate:{required:false}},
 	        		{ display: "终端SN",name:"serial",type:"text",validate:{required:false}},
-	        		{ display: "终端有效期",name:"validity",type:"date",validate:{required:false}},
+	        		{ display: "VIP到期日",name:"validity",type:"date",validate:{required:false}},
+                    { display: "启用日期",name:"adddate",type:"date",validate:{required:false}},
 	        		{ display: "备注",name:"remark",type:"text",validate:{required:false}}
 	        	],
 	        	buttons:[{text:"确认",click: doAction}]
@@ -66,9 +68,9 @@
         {
         	action = item.icon;
         	if (action == "add"){
-        		$form.setData({tid:'自动编号',mac:'',imei:'',serial:'',validity:'',remark:''});
-        		$form.setEnabled(['tid','mac','imei','serial','validity','remark'],true);
-        		$form.setEnabled(['tid'],false);
+        		$form.setData({device_info:'自动编号',mac:'',imei:'',serial:'',validity:'',adddate:'',remark:''});
+        		$form.setEnabled(['device_info','mac','imei','serial','validity','adddate','remark'],true);
+        		$form.setEnabled(['device_info'],false);
         	}else if (action == "modify"){
         		var select = $grid.getSelectedRow();
         		if (select == null){
@@ -77,8 +79,8 @@
         			 return;
         		}
         		$form.setData(select);
-        		$form.setEnabled(['tid','mac','imei','serial','validity','remark'],true);
-        		$form.setEnabled(['tid'],false);
+        		$form.setEnabled(['device_info','mac','imei','serial','validity','adddate','remark'],true);
+        		$form.setEnabled(['device_info'],false);
         	}else if (action == "delete"){
         		var select = $grid.getSelectedRow();
         		if (select == null){
@@ -87,7 +89,7 @@
         			 return;
         		}
         		$form.setData(select);
-        		$form.setEnabled(['tid','mac','imei','serial','validity','remark'],false);
+        		$form.setEnabled(['device_info','mac','imei','serial','validity','adddate','remark'],false);
         	}
         	$dialog = $.ligerDialog.open({height: 400,width: 500,target: $("#mainform")});
         }
