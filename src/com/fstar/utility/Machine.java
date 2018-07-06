@@ -21,6 +21,7 @@ public class Machine {
 	public static SimpleDateFormat formatdate=new SimpleDateFormat("yyyyMMdd");
 	public static SimpleDateFormat formattime=new SimpleDateFormat("HHmmss");
 	public static SimpleDateFormat formatdatetime=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	public static SimpleDateFormat formatdatetimeWX=new SimpleDateFormat("yyyymmddhhmmss");
 
 	public static String getDate(){
 		return getSystemDateTime().get(SYSTEM_DATE);
@@ -102,7 +103,7 @@ public class Machine {
 		System.out.println(date.toString());
 		Calendar   calendar   =   new GregorianCalendar();
 		calendar.setTime(date);
-		calendar.add(calendar.DAY_OF_MONTH, month);//把日期往后增加一个月.整数往后推,负数往前移动
+		calendar.add(calendar.MONTH, month);//把日期往后增加一个月.整数往后推,负数往前移动
 		date=calendar.getTime();   //这个时间就是日期往后推一天的结果
 		return formatdateD.format(date);
 	}

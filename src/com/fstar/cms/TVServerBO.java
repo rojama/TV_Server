@@ -136,7 +136,12 @@ public class TVServerBO {
 
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		String[] ids = deviceId.split("-");
-		String sqlOther = "and mac='"+ids[0]+"' and imei='"+ids[1]+"' and serial='"+ids[2]+"'";
+		String sqlOther = "";
+		if (ids.length == 1){
+			sqlOther = "and device_info='" + ids[0] + "'";
+		}else {
+			sqlOther = "and mac='" + ids[0] + "' and imei='" + ids[1] + "' and serial='" + ids[2] + "'";
+		}
 		List<Map<String, Object>> result = DB.seleteByColumn(ServerBO.TABLE_TERMINAL, data, "device_info,validity", sqlOther);
 		if (result.isEmpty()){
 			data.clear();
@@ -179,6 +184,15 @@ public class TVServerBO {
 		for (Map<String, Object> one : list){
 			returnmap.put((String) one.get("set_id"), one.get("set_value"));
 		}
+		return returnmap;
+	}
+
+	//设置
+	public Map<String, Object> getProduct(Map<String, Object> map)
+			throws Exception {
+		Map<String, Object> returnmap = new HashMap<String, Object>();
+		List<Map<String, Object>> list = DB.selete("fs_product");
+		returnmap.put("Products", list);
 		return returnmap;
 	}
 	

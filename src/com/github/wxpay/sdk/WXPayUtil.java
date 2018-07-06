@@ -90,6 +90,7 @@ public class WXPayUtil {
         }
         catch (Exception ex) {
         }
+        System.out.println("WXDATA:"+output);
         return output;
     }
 
