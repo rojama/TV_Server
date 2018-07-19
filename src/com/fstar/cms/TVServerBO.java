@@ -20,8 +20,20 @@ public class TVServerBO {
 		return returnmap;
 	}
 
-	// 视频分类
+	// 视频分类(兼容旧程序)
 	public Map<String, Object> parseTopCate(Map<String, Object> map)
+			throws Exception {
+		Map<String, Object> returnmap = new HashMap<String, Object>();
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("super_id", "");
+		List<Map<String, Object>> re = DB.seleteByColumn("fs_media_type_old", data, "type_id,type_name,component", "order by order_no");
+		TVServerImageBO.changeImageToURL(re, "fs_media_type_old");
+		returnmap.put("type", re);
+		return returnmap;
+	}
+
+	// 视频分类
+	public Map<String, Object> parseNewTopCate(Map<String, Object> map)
 			throws Exception {
 		Map<String, Object> returnmap = new HashMap<String, Object>();
 		Map<String, Object> data = new HashMap<String, Object>();
